@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <section id="memo">
+      <header>
+        <h1>memo</h1>
+        <input
+          v-model="inputVal"
+          v-on:keyup.enter="addMemo"
+          type="text"
+          class="new-todo"
+          placeholder="type"
+        />
+      </header>
+
+      <section class="main">
+        <ul class="memo-table">
+          <li class="memo-items" v-for="(item, index) in list">
+            <span class="index">{{ index +1 }}</span>
+            <label class="memo-item">{{ item }}</label>
+            <button class="cross" v-on:click="removeMemo(index)">╳</button>
+          </li>
+        </ul>
+      </section>
+
+      <footer class="memo-footer" v-show="list.length !== 0">
+        <span class="items-left">{{list.length}} items left</span>
+        <button class="clearBtn" v-on:click="clearMemo">Clear</button>
+      </footer>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+      var data = {
+        list: [],
+        inputVal: "",
+      };
+      var app = new Vue({
+        el: "#memo",
+        data: data,
+        methods: {
+          addMemo: function () {
+            if (this.inputVal === "") {
+              alert("enter a memo");
+            } else {
+              this.list.push(this.inputVal);
+              this.inputVal = "";
+            }
+          },
+          removeMemo: function (index) {
+            this.list.splice(index, 1);
+          },
+          clearMemo: function () {
+            this.list = [];
+            this.inputVal = "";
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
